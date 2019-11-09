@@ -59,3 +59,6 @@ typings/
 
 #Sass 
 *.css.map
+
+
+package-lock.json
