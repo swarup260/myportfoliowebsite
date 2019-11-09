@@ -7,7 +7,7 @@
     "start": "parcel ./src/index.html",
     "watch": "parcel watch ./src/index.html",
     "publish": "parcel build src/",
-    "build" : "gh-pages -d dist"
+    "build": "gh-pages -d dist"
   },
   "homepage": "https://swarup260.github.io/",
   "author": "swarup260",
