@@ -173,8 +173,9 @@ main {
 */
 
 footer {
-  background: $accent-color;
+  background: $primary-color;
   overflow: hidden;
+  bottom: 0;
 
   h5 {
     padding: 20px 25px;
