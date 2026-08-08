@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWARUP R. DAS :: SENIOR BACKEND ENGINEER</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050705;
+            --panel: #080c09;
+            --panel-2: #0b120d;
+            --border: #16281c;
+            --border-bright: #25452f;
+            --green: #00ff8c;
+            --green-dim: #0a5c37;
+            --green-glow: rgba(0, 255, 140, 0.18);
+            --cyan: #4fd1ff;
+            --amber: #ffb454;
+            --text: #d6ddd8;
+            --text-dim: #5e6d64;
+            --white: #f2f6f3;
+            --red: #ff5c5c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image:
+                linear-gradient(rgba(0, 255, 140, 0.028) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 140, 0.028) 1px, transparent 1px);
+            background-size: 36px 36px;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        ::selection {
+            background: var(--green);
+            color: #031008;
+        }
+
+        /* Overlay Effects */
+        .scanline {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 200;
+            background: repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.012) 0px, rgba(255, 255, 255, 0.012) 1px, transparent 1px, transparent 3px);
+            mix-blend-mode: overlay;
+        }
+
+        .vignette {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 199;
+            box-shadow: inset 0 0 220px rgba(0, 0, 0, 0.85);
+        }
+
+        .corner {
+            position: fixed;
+            width: 18px;
+            height: 18px;
+            z-index: 150;
+            pointer-events: none;
+            opacity: .7;
+        }
+
+        .corner.tl {
+            top: 14px;
+            left: 14px;
+            border-top: 2px solid var(--green);
+            border-left: 2px solid var(--green);
+        }
+
+        .corner.tr {
+            top: 14px;
+            right: 14px;
+            border-top: 2px solid var(--green);
+            border-right: 2px solid var(--green);
+        }
+
+        .corner.bl {
+            bottom: 14px;
+            left: 14px;
+            border-bottom: 2px solid var(--green);
+            border-left: 2px solid var(--green);
+        }
+
+        .corner.br {
+            bottom: 14px;
+            right: 14px;
+            border-bottom: 2px solid var(--green);
+            border-right: 2px solid var(--green);
+        }
+
+        .wrap {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 44px;
+            font-size: 11px;
+            letter-spacing: .12em;
+            color: var(--text-dim);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .topbar .dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            margin-right: 8px;
+            box-shadow: 0 0 8px var(--green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .35;
+            }
+        }
+
+        .badge {
+            border: 1px solid var(--border-bright);
+            padding: 5px 14px;
+            border-radius: 2px;
+            color: var(--green);
+            background: var(--panel);
+        }
+
+        .topbar .right {
+            color: var(--text-dim);
+        }
+
+        .topbar .right span {
+            color: var(--cyan);
+        }
+
+        .hero {
+            padding: 64px 0 40px;
+        }
+
+        .panel {
+            position: relative;
+            border: 1px solid var(--border-bright);
+            background: var(--panel);
+            border-radius: 3px;
+            padding: 2px;
+        }
+
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 24px;
+            right: 24px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--green), transparent);
+        }
+
+        .panel-inner {
+            border: 1px solid var(--border);
+            background: var(--panel-2);
+            padding: 28px 28px 20px;
+            position: relative;
+        }
+
+        .panel-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10.5px;
+            letter-spacing: .14em;
+            color: var(--text-dim);
+            margin-bottom: 18px;
+        }
+
+        .panel-label .id {
+            color: var(--green);
+        }
+
+        .diagram-wrap {
+            position: relative;
+        }
+
+        svg.arch {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .arch-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9.5px;
+            letter-spacing: .04em;
+            fill: var(--text-dim);
+        }
+
+        .arch-label.hl {
+            fill: var(--green);
+        }
+
+        .arch-label.hl2 {
+            fill: var(--cyan);
+        }
+
+        .arch-label.white {
+            fill: var(--white);
+            font-weight: 600;
+        }
+
+        .arch-label.center {
+            text-anchor: middle;
+        }
+
+        /* Hexagon Shape Classes */
+        .hex-core {
+            fill: var(--panel-2);
+            stroke: var(--green);
+            stroke-width: 1.5;
+        }
+
+        .hex-port {
+            fill: var(--panel);
+            stroke: var(--border-bright);
+            stroke-width: 1;
+        }
+
+        .hex-adapter {
+            fill: var(--bg);
+            stroke: var(--cyan);
+            stroke-width: 1;
+            stroke-dasharray: 4 4;
+        }
+
+        .node-box {
+            fill: var(--panel);
+            stroke: var(--border-bright);
+            stroke-width: 1;
+        }
+
+        .node-box.active {
+            stroke: var(--green);
+        }
+
+        /* Path Animations */
+        .flow-line {
+            stroke: var(--border-bright);
+            stroke-width: 1;
+            fill: none;
+        }
+
+        .flow-anim {
+            stroke: var(--green);
+            stroke-width: 1.4;
+            fill: none;
+            stroke-dasharray: 5 7;
+            animation: dash 1.6s linear infinite;
+        }
+
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -24;
+            }
+        }
+
+        .flow-anim.cy {
+            stroke: var(--cyan);
+        }
+
+        .flow-anim.rev {
+            animation: dash-rev 1.6s linear infinite;
+        }
+
+        @keyframes dash-rev {
+            to {
+                stroke-dashoffset: 24;
+            }
+        }
+
+        /* HUD Overlay */
+        .hud {
+            position: absolute;
+            background: rgba(5, 7, 5, 0.92);
+            border: 1px solid var(--border-bright);
+            padding: 10px 14px;
+            font-size: 10px;
+            min-width: 150px;
+        }
+
+        .hud-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--green);
+            letter-spacing: .08em;
+            margin-bottom: 8px;
+            font-size: 10px;
+        }
+
+        .hud-title .sq {
+            width: 8px;
+            height: 8px;
+            border: 1px solid var(--green);
+            display: inline-block;
+        }
+
+        .meter {
+            height: 4px;
+            background: var(--border);
+            margin-top: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .meter i {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            background: var(--green);
+        }
+
+        .hud .row {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-dim);
+            margin-top: 6px;
+        }
+
+        .hud .row b {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .hud.hud-1 {
+            top: 14px;
+            right: 14px;
+        }
+
+        .hud.hud-2 {
+            left: 14px;
+            bottom: 14px;
+        }
+
+        .panel-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9.5px;
+            color: var(--text-dim);
+            border-top: 1px solid var(--border);
+            margin-top: 16px;
+            padding-top: 12px;
+            letter-spacing: .06em;
+        }
+
+        .hero-copy {
+            text-align: center;
+            padding: 56px 0 20px;
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            letter-spacing: .22em;
+            color: var(--green);
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .eyebrow::before,
+        .eyebrow::after {
+            content: '';
+            width: 26px;
+            height: 1px;
+            background: var(--green-dim);
+        }
+
+        h1 {
+            font-size: clamp(34px, 6vw, 68px);
+            font-weight: 800;
+            letter-spacing: -.01em;
+            color: var(--white);
+            line-height: 1.06;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.08);
+        }
+
+        h1 .accent {
+            color: var(--green);
+            text-shadow: 0 0 22px var(--green-glow);
+        }
+
+        .sub {
+            max-width: 640px;
+            margin: 26px auto 8px;
+            color: var(--text-dim);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .sub b {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .init-line {
+            color: var(--green-dim);
+            font-size: 12.5px;
+            margin-top: 14px;
+        }
+
+        .init-line::before {
+            content: '> ';
+            color: var(--green);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 7px;
+            height: 14px;
+            background: var(--green);
+            margin-left: 2px;
+            vertical-align: -2px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .cta-row {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 34px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            font-family: inherit;
+            font-size: 13px;
+            letter-spacing: .04em;
+            padding: 14px 26px;
+            border-radius: 2px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform .15s ease, box-shadow .15s ease;
+        }
+
+        .btn-primary {
+            background: var(--green);
+            color: #031008;
+            font-weight: 700;
+            border: 1px solid var(--green);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 24px var(--green-glow);
+            transform: translateY(-1px);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-dim);
+            border: 1px solid var(--border-bright);
+        }
+
+        .btn-ghost:hover {
+            color: var(--text);
+            border-color: var(--text-dim);
+        }
+
+        section {
+            padding: 90px 0;
+        }
+
+        .identity-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            margin-top: 26px;
+            border: 1px solid var(--border);
+            background: var(--border);
+        }
+
+        .identity-strip>div {
+            background: var(--panel);
+            padding: 18px 20px;
+            min-height: 72px;
+        }
+
+        .identity-strip .k {
+            display: block;
+            color: var(--green-dim);
+            font-size: 9px;
+            letter-spacing: .12em;
+            margin-bottom: 6px;
+        }
+
+        .identity-strip b {
+            font-size: 11.5px;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        @media(max-width:900px) {
+            .identity-strip {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width:520px) {
+            .identity-strip {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sec-head {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 44px;
+        }
+
+        .sec-num {
+            font-size: 12px;
+            color: var(--green-dim);
+            letter-spacing: .1em;
+        }
+
+        .sec-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -.01em;
+        }
+
+        .sec-title span {
+            color: var(--green);
+        }
+
+        .sec-rule {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* Stack Grid */
+        .stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .stack-item {
+            background: var(--panel);
+            padding: 20px 16px;
+            position: relative;
+            transition: background .15s ease;
+        }
+
+        .stack-item:hover {
+            background: var(--panel-2);
+        }
+
+        .stack-item .k {
+            font-size: 9px;
+            color: var(--green-dim);
+            letter-spacing: .1em;
+        }
+
+        .stack-item .n {
+            font-size: 14px;
+            color: var(--text);
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        .stack-item .role {
+            font-size: 10.5px;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        .stack-item::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: transparent;
+            transition: background .15s ease;
+        }
+
+        .stack-item:hover::after {
+            background: var(--green);
+        }
+
+        .proj {
+            border: 1px solid var(--border);
+            background: var(--panel);
+            margin-bottom: 24px;
+        }
+
+        .proj-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 20px 26px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .proj-head .tag {
+            font-size: 10px;
+            color: var(--green-dim);
+            letter-spacing: .14em;
+        }
+
+        .proj-head h3 {
+            font-size: 18px;
+            color: var(--white);
+            font-weight: 600;
+            margin-top: 6px;
+        }
+
+        .proj-status {
+            font-size: 10px;
+            color: var(--green);
+            border: 1px solid var(--green-dim);
+            padding: 4px 10px;
+            letter-spacing: .08em;
+        }
+
+        .proj-body {
+            padding: 24px 26px;
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 32px;
+        }
+
+        .proj-desc {
+            color: var(--text-dim);
+            font-size: 13.5px;
+            line-height: 1.75;
+        }
+
+        .proj-desc b {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .proj-specs {
+            border-left: 1px solid var(--border);
+            padding-left: 26px;
+        }
+
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11.5px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-dim);
+        }
+
+        .spec-row:last-child {
+            border-bottom: none;
+        }
+
+        .spec-row b {
+            color: var(--cyan);
+            font-weight: 500;
+            text-align: right;
+            max-width: 70%;
+        }
+
+        .proj-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 0 26px 24px;
+        }
+
+        .chip {
+            font-size: 10.5px;
+            color: var(--text);
+            background: var(--panel-2);
+            border: 1px solid var(--border-bright);
+            padding: 5px 10px;
+            letter-spacing: .03em;
+        }
+
+        @media (max-width:760px) {
+            .proj-body {
+                grid-template-columns: 1fr;
+            }
+
+            .proj-specs {
+                border-left: none;
+                padding-left: 0;
+                border-top: 1px solid var(--border);
+                padding-top: 16px;
+            }
+        }
+
+        /* Principles Log */
+        .log {
+            border: 1px solid var(--border);
+            background: var(--panel);
+        }
+
+        .log-row {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 20px;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            font-size: 12.5px;
+        }
+
+        .log-row:last-child {
+            border-bottom: none;
+        }
+
+        .log-ts {
+            color: var(--green-dim);
+            font-size: 11px;
+        }
+
+        .log-msg b {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .log-msg {
+            color: var(--text-dim);
+        }
+
+        /* Certifications */
+        .cert-panel {
+            border: 1px solid var(--border-bright);
+            background: var(--panel);
+            padding: 26px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            transition: border-color .2s ease, box-shadow .2s ease;
+        }
+
+        .cert-panel:hover {
+            border-color: var(--amber);
+            box-shadow: 0 0 24px rgba(255, 180, 84, 0.12);
+        }
+
+        .cert-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .cert-badge {
+            width: 52px;
+            height: 52px;
+            border: 1px solid var(--amber);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--amber);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .02em;
+            flex-shrink: 0;
+            background: rgba(255, 180, 84, 0.05);
+        }
+
+        .cert-name {
+            font-size: 15px;
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .cert-sub {
+            font-size: 11.5px;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        .cert-status {
+            font-size: 10px;
+            color: var(--amber);
+            border: 1px solid var(--amber);
+            padding: 4px 10px;
+            letter-spacing: .08em;
+            background: rgba(255, 180, 84, 0.05);
+        }
+
+        /* Terminal */
+        .terminal-box {
+            border: 1px solid var(--border-bright);
+            background: #030503;
+        }
+
+        .terminal-top {
+            display: flex;
+            justify-content: space-between;
+            padding: 11px 18px;
+            border-bottom: 1px solid var(--border);
+            font-size: 9px;
+            color: var(--text-dim);
+            letter-spacing: .08em;
+        }
+
+        .terminal-body {
+            padding: 22px;
+            font-size: 12px;
+            line-height: 2;
+        }
+
+        .prompt {
+            color: var(--green);
+        }
+
+        .out {
+            color: var(--text-dim);
+            padding-left: 18px;
+        }
+
+        .ok {
+            color: var(--green);
+            margin-right: 7px;
+        }
+
+        /* Contact */
+        .contact-panel {
+            border: 1px solid var(--border-bright);
+            background: var(--panel);
+            padding: 36px 40px;
+        }
+
+        .contact-prompt {
+            font-size: 13px;
+            color: var(--green);
+            margin-bottom: 20px;
+        }
+
+        .contact-prompt::before {
+            content: '$ ';
+            color: var(--text-dim);
+        }
+
+        .contact-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 14px;
+        }
+
+        .clink {
+            border: 1px solid var(--border);
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            transition: border-color .15s ease, background .15s ease;
+        }
+
+        .clink:hover {
+            border-color: var(--green-dim);
+            background: var(--panel-2);
+        }
+
+        .clink>div {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .clink .lbl {
+            font-size: 9.5px;
+            color: var(--text-dim);
+            letter-spacing: .1em;
+        }
+
+        .clink .val {
+            font-size: 12.5px;
+            color: var(--text);
+            margin-top: 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .clink .arrow {
+            color: var(--green);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 26px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10.5px;
+            color: var(--text-dim);
+            letter-spacing: .06em;
+        }
+
+        footer .stat {
+            color: var(--green);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+
+        .reveal.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width:640px) {
+            .wrap {
+                padding: 0 18px;
+            }
+
+            .topbar {
+                padding: 16px 18px;
+            }
+
+            .hud {
+                position: static;
+                margin-top: 12px;
+                width: 100%;
+            }
+
+            .hud.hud-1,
+            .hud.hud-2 {
+                position: static;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .log-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="scanline"></div>
+    <div class="vignette"></div>
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+
+    <div class="topbar" id="home">
+        <div><span class="dot"></span>SYSTEM.STATUS(ONLINE)</div>
+        <div class="badge">SWARUP_DAS // 8+ YEARS // LTIMINDTREE</div>
+        <div class="right">LATENCY <span id="topLatency">41ms</span></div>
+    </div>
+
+    <div class="wrap">
+        <div class="hero">
+            <div class="panel reveal">
+                <div class="panel-inner">
+                    <div class="panel-label">
+                        <span>SYSTEM.ARCHITECTURE <span class="id">// HEXAGONAL + AWS</span></span>
+                        <span>SERVICES: 24 // REGION: AP-SOUTH-1</span>
+                    </div>
+
+                    <div class="diagram-wrap">
+                        <svg class="arch" viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg">
+
+                            <!-- Central Hexagon: Domain & Application Core -->
+                            <g transform="translate(450, 180)">
+                                <!-- Outer Boundary (Ports) -->
+                                <polygon class="hex-port" points="0,-110 95,-55 95,55 0,110 -95,55 -95,-55" />
+                                <!-- Inner Boundary (Domain) -->
+                                <polygon class="hex-core" points="0,-70 60,-35 60,35 0,70 -60,35 -60,-35" />
+
+                                <text class="arch-label white center" x="0" y="-5">DOMAIN</text>
+                                <text class="arch-label center" x="0" y="10">LOGIC</text>
+
+                                <!-- Port Labels -->
+                                <text class="arch-label hl2 center" x="-60" y="-75">Primary Ports</text>
+                                <text class="arch-label hl2 center" x="60" y="-75">Secondary Ports</text>
+                            </g>
+
+                            <!-- LEFT SIDE: Primary Adapters (Driving) -->
+                            <!-- Client Layer -->
+                            <rect class="node-box" x="20" y="80" width="120" height="50" rx="2"></rect>
+                            <text class="arch-label hl" x="35" y="100">CLIENT / APP</text>
+                            <text class="arch-label" x="35" y="115">Web · Flutter</text>
+
+                            <!-- API Gateway -->
+                            <rect class="node-box active" x="180" y="70" width="130" height="70" rx="2"></rect>
+                            <text class="arch-label hl" x="195" y="92">API GATEWAY</text>
+                            <text class="arch-label" x="195" y="108">routing · auth</text>
+                            <text class="arch-label" x="195" y="122">GraphQL / REST</text>
+
+                            <!-- Driving Flows to Left Side of Hexagon -->
+                            <path class="flow-line" d="M140 105 L 180 105"></path>
+                            <path class="flow-anim" d="M140 105 L 180 105"></path>
+
+                            <path class="flow-line" d="M310 105 L 355 125 L 355 160"></path>
+                            <path class="flow-anim" d="M310 105 L 355 125 L 355 160"></path>
+
+                            <!-- External Triggers (Cron/Events) -->
+                            <rect class="node-box" x="180" y="180" width="130" height="50" rx="2"></rect>
+                            <text class="arch-label hl" x="195" y="200">EVENT TRIGGERS</text>
+                            <text class="arch-label" x="195" y="215">Cron Jobs · Webhooks</text>
+
+                            <path class="flow-line" d="M310 205 L 355 205"></path>
+                            <path class="flow-anim" d="M310 205 L 355 205"></path>
+
+
+                            <!-- RIGHT SIDE: Secondary Adapters (Driven) -->
+                            <!-- Driven Flows from Right Side of Hexagon -->
+                            <path class="flow-line" d="M545 125 L 590 105 L 630 105"></path>
+                            <path class="flow-anim cy" d="M545 125 L 590 105 L 630 105"></path>
+
+                            <path class="flow-line" d="M545 205 L 590 205 L 630 205"></path>
+                            <path class="flow-anim cy" d="M545 205 L 590 205 L 630 205"></path>
+
+                            <path class="flow-line" d="M545 235 L 590 255 L 630 255"></path>
+                            <path class="flow-anim cy" d="M545 235 L 590 255 L 630 255"></path>
+
+                            <!-- SQS Workers -->
+                            <rect class="node-box" x="630" y="70" width="140" height="70" rx="2"></rect>
+                            <text class="arch-label hl2" x="645" y="92">ASYNC QUEUES</text>
+                            <text class="arch-label" x="645" y="108">AWS SQS · Workers</text>
+                            <text class="arch-label" x="645" y="122">DMT · retries</text>
+
+                            <!-- Data Persistence -->
+                            <rect class="node-box active" x="630" y="175" width="140" height="60" rx="2"></rect>
+                            <text class="arch-label hl" x="645" y="195">DATA PERSISTENCE</text>
+                            <text class="arch-label" x="645" y="210">MySQL · MongoDB</text>
+                            <text class="arch-label" x="645" y="222">Knex.js ORM</text>
+
+                            <!-- 3rd Party Integration -->
+                            <rect class="node-box" x="630" y="255" width="140" height="50" rx="2"></rect>
+                            <text class="arch-label hl" x="645" y="275">EXTERNAL APIs</text>
+                            <text class="arch-label" x="645" y="290">Payment Gateways</text>
+
+                            <!-- CloudWatch Log Flow from SQS -->
+                            <path class="flow-line" d="M770 105 L 830 105"></path>
+                            <path class="flow-anim cy" d="M770 105 L 830 105"></path>
+                            <circle cx="842" cy="105" r="8" fill="none" stroke="#25452f" stroke-width="1"></circle>
+                            <circle cx="842" cy="105" r="3" fill="#00ff8c"></circle>
+
+                            <!-- Bottom Legend -->
+                            <text class="arch-label" x="20" y="360">DRIVING: Primary Adapters initiating use
+                                cases</text>
+                            <text class="arch-label" x="20" y="375">INVERSION OF CONTROL: Core defines interfaces,
+                                adapters implement</text>
+                            <text class="arch-label hl2" x="600" y="360">DRIVEN (INFRASTRUCTURE)</text>
+                            <text class="arch-label" x="600" y="375">Secondary Adapters implementing ports</text>
+                        </svg>
+
+                        <div class="hud hud-1" style="top: 10px; right: 20px;">
+                            <div class="hud-title"><span class="sq"></span>CORE_HEALTH</div>
+                            <div>Downtime: <span id="loadPct">0</span>%</div>
+                            <div class="meter"><i id="loadMeter" style="width:98%"></i></div>
+                            <div class="row"><span>lambda</span><b>READY</b></div>
+                            <div class="row"><span>sqs_dmt</span><b>HEALTHY</b></div>
+                        </div>
+
+                        <div class="hud hud-2" style="bottom: 50px; left: 20px;">
+                            <div class="hud-title"><span class="sq"></span>DELIVERY</div>
+                            <div class="row"><span>architecture</span><b>HEXAGONAL</b></div>
+                            <div class="row"><span>focus</span><b>ISOLATION</b></div>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer">
+                        <span>PROFILE: SWARUP_R_DAS // SENIOR SOFTWARE SPECIALIST</span>
+                        <span>v2.0.0 · NODEJS_ECOSYSTEM · PUBLIC</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-copy reveal">
+                <div class="eyebrow">SENIOR BACKEND ENGINEER · NODE.JS EXPERT</div>
+                <h1>ARCHITECT THE <span class="accent">BACKEND.</span><br>ENGINEER FOR SCALE.</h1>
+                <p class="sub">With over <b>8+ years of experience</b>, I craft high-performance, scalable Node.js
+                    backend solutions. I specialize in <b>Hexagonal & Onion architectures, AWS Serverless orchestration
+                        (Lambda/SQS)</b>, and building resilient GraphQL/REST integrations that safely encapsulate
+                    unreliable third-party APIs.</p>
+                <div class="init-line">loading engineering profile<span class="cursor"></span></div>
+                <div class="cta-row">
+                    <a href="#projects" class="btn btn-primary">&gt;_ EXPLORE_SYSTEMS</a>
+                    <a href="#contact" class="btn btn-ghost">ESTABLISH_CONNECTION</a>
+                </div>
+            </div>
+
+            <div class="identity-strip reveal">
+                <div><span class="k">ROLE</span><b>Software Specialist @ LTIMindtree</b></div>
+                <div><span class="k">DOMAIN</span><b>Fintech · Aviation · Retail</b></div>
+                <div><span class="k">SPECIALTY</span><b>API Architecture · Distributed Systems</b></div>
+                <div><span class="k">IMPACT</span><b>30% ↓ API Failures // 25% ↓ Dev Effort</b></div>
+            </div>
+        </div>
+
+        <section id="stack">
+            <div class="sec-head reveal"><span class="sec-num">01</span><span
+                    class="sec-title">ENGINEERING<span>.STACK</span></span><span class="sec-rule"></span></div>
+            <div class="stack-grid reveal">
+                <div class="stack-item">
+                    <div class="k">CORE BACKEND</div>
+                    <div class="n">Node.js / Express</div>
+                    <div class="role">high-throughput backend services</div>
+                </div>
+                <div class="stack-item">
+                    <div class="k">LANGUAGES</div>
+                    <div class="n">TypeScript / JS</div>
+                    <div class="role">type-safe APIs · orchestration</div>
+                </div>
+                <div class="stack-item">
+                    <div class="k">CLOUD</div>
+                    <div class="n">AWS Ecosystem</div>
+                    <div class="role">Lambda · SQS · CloudWatch</div>
+                </div>
+                <div class="stack-item">
+                    <div class="k">API PROTOCOLS</div>
+                    <div class="n">GraphQL / REST</div>
+                    <div class="role">frontend contracts · aggregation</div>
+                </div>
+                <div class="stack-item">
+                    <div class="k">ARCHITECTURE</div>
+                    <div class="n">Hexagonal / Onion</div>
+                    <div class="role">ports & adapters · boundaries</div>
+                </div>
+                <div class="stack-item">
+                    <div class="k">DATABASES</div>
+                    <div class="n">MySQL / MongoDB</div>
+                    <div class="role">relational & unstructured persistence</div>
+                </div>
+                <div class="stack-item">
+                    <div class="k">FRONTEND</div>
+                    <div class="n">ReactJS</div>
+                    <div class="role">UI components · React Hooks</div>
+                </div>
+                <div class="stack-item">
+                    <div class="k">MOBILE</div>
+                    <div class="n">Flutter / Dart</div>
+                    <div class="role">hybrid mobile app delivery</div>
+                </div>
+                <div class="stack-item">
+                    <div class="k">LANGUAGES</div>
+                    <div class="n">PHP / Python</div>
+                    <div class="role">legacy systems · scripting</div>
+                </div>
+                <div class="stack-item">
+                    <div class="k">ORM</div>
+                    <div class="n">Knex.js</div>
+                    <div class="role">query building · schema management</div>
+                </div>
+                <div class="stack-item">
+                    <div class="k">PROCESS</div>
+                    <div class="n">Agile / Scrum</div>
+                    <div class="role">project management · sprint delivery</div>
+                </div>
+                <div class="stack-item">
+                    <div class="k">TOOLING</div>
+                    <div class="n">Git / NPM / Composer</div>
+                    <div class="role">version control · dependency mgmt</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="sec-head reveal"><span class="sec-num">02</span><span
+                    class="sec-title">SELECTED<span>.SYSTEMS</span></span><span class="sec-rule"></span></div>
+
+            <!-- Project 1: Delta Airlines -->
+            <div class="proj reveal">
+                <div class="proj-head">
+                    <div>
+                        <div class="tag">SYSTEM_01 // AVIATION_ARCHITECTURE</div>
+                        <h3>Delta Airlines — Backend Modernization</h3>
+                    </div>
+                    <div class="proj-status">● HEXAGONAL_ARCH</div>
+                </div>
+                <div class="proj-body">
+                    <div class="proj-desc">
+                        Led the migration of legacy serverless APIs to a <b>Hexagonal (Ports & Adapters)
+                            Architecture</b> for a global aviation giant. This established the V2 backend platform,
+                        serving as the standard foundation for all new services while enabling the phased, low-risk
+                        modernization of existing APIs. By standardizing adapters and domain services, we significantly
+                        improved maintainability.
+                    </div>
+                    <div class="proj-specs">
+                        <div class="spec-row"><span>architecture</span><b>Hexagonal (Ports & Adapters)</b></div>
+                        <div class="spec-row"><span>compute</span><b>AWS Lambda + Serverless</b></div>
+                        <div class="spec-row"><span>impact</span><b>25% reduction in dev effort</b></div>
+                        <div class="spec-row"><span>observability</span><b>CloudWatch Logs + Metrics</b></div>
+                    </div>
+                </div>
+                <div class="proj-stack">
+                    <span class="chip">TypeScript</span><span class="chip">Node.js</span><span class="chip">AWS
+                        Lambda</span><span class="chip">AWS SQS</span><span class="chip">REST API</span>
+                </div>
+            </div>
+
+            <!-- Project 2: Airpay Vyaapaar -->
+            <div class="proj reveal">
+                <div class="proj-head">
+                    <div>
+                        <div class="tag">SYSTEM_02 // FINTECH_PAYMENTS</div>
+                        <h3>Airpay Vyaapaar — DMT Workflow</h3>
+                    </div>
+                    <div class="proj-status">● ONION_ARCH</div>
+                </div>
+                <div class="proj-body">
+                    <div class="proj-desc">
+                        Architected domestic and international money transfer modules in a high-stakes fintech
+                        environment. Implemented <b>Onion Architecture</b> to streamline the integration of historically
+                        unreliable third-party APIs. Introduced <b>AWS SQS</b> to decouple transaction processing,
+                        fundamentally altering the system's failure profile and boosting overall success rates.
+                    </div>
+                    <div class="proj-specs">
+                        <div class="spec-row"><span>async processing</span><b>AWS SQS integration</b></div>
+                        <div class="spec-row"><span>system resilience</span><b>20% reduction in API downtime</b></div>
+                        <div class="spec-row"><span>transaction health</span><b>30% fewer API failures</b></div>
+                        <div class="spec-row"><span>client contract</span><b>GraphQL API implementation</b></div>
+                    </div>
+                </div>
+                <div class="proj-stack">
+                    <span class="chip">Node.js</span><span class="chip">GraphQL</span><span class="chip">AWS
+                        SQS</span><span class="chip">MongoDB</span><span class="chip">MySQL</span>
+                </div>
+            </div>
+
+            <!-- Project 3: Techsevin Performance -->
+            <div class="proj reveal">
+                <div class="proj-head">
+                    <div>
+                        <div class="tag">SYSTEM_03 // RETAIL_OPTIMIZATION</div>
+                        <h3>E-Commerce Backend & Automation</h3>
+                    </div>
+                    <div class="proj-status">● MIDDLEWARE_&_CRON</div>
+                </div>
+                <div class="proj-body">
+                    <div class="proj-desc">
+                        Developed and optimized critical backend processes for retail applications. Engineered custom
+                        <b>Middleware interceptors</b> to increase security and reduce overhead when communicating with
+                        external APIs. Built robust cron jobs to automate product updates, drastically cutting
+                        processing times and ensuring near-real-time data accuracy across the platform.
+                    </div>
+                    <div class="proj-specs">
+                        <div class="spec-row"><span>automation</span><b>Cron job optimization (1hr to <10min)< /b>
+                        </div>
+                        <div class="spec-row"><span>logistics</span><b>30% faster order fulfillment</b></div>
+                        <div class="spec-row"><span>security</span><b>Middleware interceptor routing</b></div>
+                        <div class="spec-row"><span>search</span><b>Elasticsearch integration</b></div>
+                    </div>
+                </div>
+                <div class="proj-stack">
+                    <span class="chip">Express.js</span><span class="chip">Knex.js</span><span class="chip">Cron
+                        Jobs</span><span class="chip">Elasticsearch</span><span class="chip">JWT</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="principles">
+            <div class="sec-head reveal"><span class="sec-num">03</span><span
+                    class="sec-title">ENGINEERING<span>.SIGNATURE</span></span><span class="sec-rule"></span></div>
+            <div class="log reveal">
+                <div class="log-row">
+                    <div class="log-ts">[ARCHITECTURE]</div>
+                    <div class="log-msg"><b>Isolate the Domain (Hexagonal/Onion).</b> Relying on unreliable 3rd-party
+                        APIs is a reality. By using Ports & Adapters, I protect core business logic from external
+                        failures, reducing API downtime by 20%.</div>
+                </div>
+                <div class="log-row">
+                    <div class="log-ts">[ASYNC_FLOWS]</div>
+                    <div class="log-msg"><b>Decouple with Queues.</b> Moving Domestic Money Transfer (DMT) workflows to
+                        AWS SQS reduced API failures by 30% and increased successful transactions by 20%.</div>
+                </div>
+                <div class="log-row">
+                    <div class="log-ts">[OBSERVABILITY]</div>
+                    <div class="log-msg"><b>Distributed Tracing is Mandatory.</b> Implementing structured logging and
+                        tracing via CloudWatch Logs & Alarms drastically reduces mean time to resolution (MTTR) for
+                        complex serverless chains.</div>
+                </div>
+                <div class="log-row">
+                    <div class="log-ts">[CLIENT_CONTRACTS]</div>
+                    <div class="log-msg"><b>Optimize Frontend Communication.</b> Designing efficient GraphQL APIs
+                        reduces development time for mobile/web teams by 20% while providing unmatched flexibility.
+                    </div>
+                </div>
+                <div class="log-row">
+                    <div class="log-ts">[AUTOMATION]</div>
+                    <div class="log-msg"><b>Ruthless Optimization.</b> Whether it's migrating tracking systems to cut
+                        page load times or optimizing cron jobs to run in <10 minutes instead of an hour, performance
+                            matters.</div>
+                    </div>
+                </div>
+        </section>
+
+        <section id="certifications">
+            <div class="sec-head reveal"><span class="sec-num">04</span><span
+                    class="sec-title">CERTIFICATION<span>.RECORD</span></span><span class="sec-rule"></span></div>
+            <div class="cert-panel reveal">
+                <div class="cert-left">
+                    <div class="cert-badge">AWS</div>
+                    <div>
+                        <div class="cert-name">AWS Certified Cloud Practitioner</div>
+                        <div class="cert-sub">Amazon Web Services · 2024 </div>
+                    </div>
+                </div>
+                <div class="cert-status">VERIFIED</div>
+            </div>
+        </section>
+
+        <section id="terminal">
+            <div class="sec-head reveal"><span class="sec-num">05</span><span
+                    class="sec-title">SYSTEM<span>.TERMINAL</span></span><span class="sec-rule"></span></div>
+            <div class="terminal-box reveal">
+                <div class="terminal-top"><span>SWARUP@BACKEND</span><span>zsh · production-minded</span></div>
+                <div class="terminal-body">
+                    <div><span class="prompt">swarup@backend:~$</span> whoami</div>
+                    <div class="out">Swarup Rohitosh Das — Senior Backend Engineer / Software Specialist</div>
+                    <div><span class="prompt">swarup@backend:~$</span> cat /location</div>
+                    <div class="out">Mumbai, Maharashtra, India</div>
+                    <div><span class="prompt">swarup@backend:~$</span> cat /focus</div>
+                    <div class="out">NodeJS · TypeScript · AWS Lambda/SQS · Hexagonal Arch · GraphQL · DB Optimization
+                    </div>
+                    <div><span class="prompt">swarup@backend:~$</span> status</div>
+                    <div class="out"><span class="ok">●</span> delivering high-performance, scalable solutions<span
+                            class="cursor"></span></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="sec-head reveal"><span class="sec-num">06</span><span
+                    class="sec-title">ESTABLISH<span>.CONNECTION</span></span><span class="sec-rule"></span></div>
+            <div class="contact-panel reveal">
+                <div class="contact-prompt">contact --init<span class="cursor"></span></div>
+                <div class="contact-links">
+                    <a class="clink" href="mailto:swarup260@gmail.com">
+                        <div>
+                            <div class="lbl">EMAIL</div>
+                            <div class="val">swarup260@gmail.com</div>
+                        </div>
+                        <div class="arrow">→</div>
+                    </a>
+                    <a class="clink" href="https://stackoverflow.com/users/9689561/swarup260?tab=profile">
+                        <div>
+                            <div class="lbl">STACKOVERFLOW</div>
+                            <div class="val">stackoverflow.com/swarup260</div>
+                        </div>
+                        <div class="arrow">→</div>
+                    </a>
+                    <a class="clink" href="https://www.linkedin.com/in/swarup-das-3917a0146" target="_blank"
+                        rel="noopener">
+                        <div>
+                            <div class="lbl">LINKEDIN</div>
+                            <div class="val">linkedin.com/swarup-das</div>
+                        </div>
+                        <div class="arrow">→</div>
+                    </a>
+                    <a class="clink" href="https://github.com/swarup260" target="_blank" rel="noopener">
+                        <div>
+                            <div class="lbl">GITHUB</div>
+                            <div class="val">github.com/swarupdas</div>
+                        </div>
+                        <div class="arrow">→</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <span>© <span id="year"></span> SWARUP R. DAS // SYSTEM_NOMINAL</span>
+            <span class="stat">● SYSTEM_NOMINAL // READY_TO_BUILD</span>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Subtle load meter jitter to simulate system activity
+        const meter = document.getElementById('loadMeter');
+        const loadPct = document.getElementById('loadPct');
+        function jitterLoad() {
+            // Keeping "downtime" low for a senior engineer vibe
+            const v = Math.round(Math.random() * 2);
+            meter.style.width = (100 - v) + '%';
+            loadPct.textContent = v;
+        }
+        setInterval(jitterLoad, 2600);
+
+        // Latency jitter
+        const lat = document.getElementById('topLatency');
+        function jitterLatency() {
+            const v = 28 + Math.round(Math.random() * 15);
+            lat.textContent = v + 'ms';
+        }
+        setInterval(jitterLatency, 3200);
+
+        // Reveal animation on scroll
+        const revealEls = document.querySelectorAll('.reveal');
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+            });
+        }, { threshold: 0.12 });
+        revealEls.forEach(el => io.observe(el));
+
+        // --- EASTER EGG SEQUENCE ---
+        // Triggered by typing specific resume keywords or key combos.
+
+        let keyBuffer = '';
+        const eggWords = ['dmt', 'sqs', 'lambda', 'hexagonal'];
+
+        document.addEventListener('keydown', (e) => {
+            // 1. Keyboard Combo: CTRL + SHIFT + E (Execute)
+            if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'e') {
+                triggerEasterEgg();
+                return;
+            }
+
+            // 2. Keyword Buffer: Typing specific words
+            if (e.key.length === 1) { // Only printable chars
+                keyBuffer += e.key.toLowerCase();
+                // Keep buffer short
+                if (keyBuffer.length > 20) keyBuffer = keyBuffer.slice(-20);
+
+                eggWords.forEach(word => {
+                    if (keyBuffer.endsWith(word)) {
+                        triggerEasterEgg(word);
+                        keyBuffer = ''; // Reset after trigger
+                    }
+                });
+            }
+        });
+
+        function triggerEasterEgg(triggerWord = 'manual') {
+            console.log(`%c[SYSTEM_OVERRIDE_INITIATED] via ${triggerWord}`, "color: #00ff8c; font-weight: bold; background: #050705; padding: 4px; border: 1px solid #25452f;");
+
+            // Temporarily swap specific text elements with resume metrics
+            const swaps = [
+                { id: 'topLatency', text: '1hr -> 10m' }, // Techsevin cron optimization
+                { id: 'loadPct', text: '-30%' },         // API failures reduction
+                { selector: '.arch-label.hl2.center', index: 0, text: '-20% DOWNTIME' }, // Airpay downtime
+                { selector: '.arch-label.hl2.center', index: 1, text: '-25% DEV_EFFORT' }, // Delta Airlines dev effort
+                { selector: '.hud-title span.sq', text: '⚡', isHtml: true } // Change icon
+            ];
+
+            const originalStates = [];
+
+            swaps.forEach(swap => {
+                let el;
+                if (swap.id) el = document.getElementById(swap.id);
+                if (swap.selector) {
+                    const els = document.querySelectorAll(swap.selector);
+                    if (els.length > swap.index) el = els[swap.index];
+                }
+
+                if (el) {
+                    originalStates.push({ element: el, original: el.innerHTML });
+                    if (swap.isHtml) {
+                        el.innerHTML = swap.text;
+                    } else {
+                        el.textContent = swap.text;
+                    }
+                    el.style.color = 'var(--red)'; // Highlight the altered data in red
+                    el.style.textShadow = '0 0 10px rgba(255, 92, 92, 0.4)';
+                }
+            });
+
+            // Add a glitch class to the body temporarily
+            document.body.style.filter = 'contrast(1.2) hue-rotate(5deg)';
+
+            // Add temporary terminal output
+            const termBody = document.querySelector('.terminal-body');
+            if (termBody) {
+                const tempMsg = document.createElement('div');
+                tempMsg.innerHTML = `<span class="prompt" style="color:var(--red);">[SYSTEM_ALERT]</span> metric_extraction complete. found [30% ↓ failures], [25% ↓ effort]. restoring state in 5s...`;
+                tempMsg.style.color = 'var(--red)';
+                termBody.appendChild(tempMsg);
+
+                // Remove it after delay
+                setTimeout(() => {
+                    if (tempMsg.parentNode) tempMsg.parentNode.removeChild(tempMsg);
+                }, 5000);
+            }
+
+
+            // Restore original state after 5 seconds
+            setTimeout(() => {
+                originalStates.forEach(state => {
+                    state.element.innerHTML = state.original;
+                    state.element.style.color = '';
+                    state.element.style.textShadow = '';
+                });
+                document.body.style.filter = '';
+                console.log(`%c[SYSTEM_RESTORED]`, "color: #5e6d64; font-weight: normal;");
+            }, 5000);
+        }
+    </script>
+
+</body>
+
+</html>
